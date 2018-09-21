@@ -1,0 +1,164 @@
+\documentclass[10pt, twoside]{article}
+\usepackage{listings}
+\usepackage{amsmath,amsfonts}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage{authblk}
+\usepackage{bm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{color} %red, green, blue, yellow, cyan, magenta, black, white
+\definecolor{mygreen}{RGB}{28,172,0} % color values Red, Green, Blue
+\definecolor{mylilas}{RGB}{170,55,241}
+\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+\usepackage[pdftex,dvipsnames]{xcolor}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\uu}{\mathbf{u}}
+\newcommand{\zz}{\mathbf{z}}
+\newcommand{\vvh}{\mathbf{v}_h}
+\newcommand{\uuh}{\mathbf{u}_h}
+\newcommand{\xx}{\mathbf{x}}
+\newcommand{\yy}{\mathbf{y}}
+\newcommand{\dt}{\Delta t}
+\newcommand{\fo}{\bm{\mathcal{F}}}
+\newcommand{\Dt}{D_{\Delta t}}
+\newcommand{\VV}{\mathbf{V}}
+\newcommand{\CC}{\mathbf{C}}
+\newcommand{\XX}{\mathbf{X}}
+\newcommand{\lv}{\left \vert}
+\newcommand{\rv}{\right \vert}
+\newcommand{\lno}{\left \Vert}
+\newcommand{\rno}{\right \Vert}
+\newcommand{\pil}{\pi_\ell}
+\newcommand{\pim}{\pi_{\ell-1}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\LL}{\mathbf{L}}
+\newcommand{\TODO}[1]{\color{red}{TODO: #1}\color{black}}
+\newcommand{\comm}[1]{\color{blue}{COMMENT: #1}\color{black}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\eff}{\bm{\mathcal{F}}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\te}{\bm{\theta}}
+\newcommand{\phib}{\bm{\phi}}
+\newcommand{\pot}{\Phi(\te;\yy)}
+\newcommand{\poth}{\Phi_\ell(\te;\yy)}
+\newcommand{\potl}{{\Phi_{\ell-1}(\te;\yy)}}
+\newcommand{\zl}{{Z_{\ell-1}}}
+\newcommand{\zm}{{Z_{\ell}}}
+\newcommand{\potm}{{\Phi_{\ell}(\te;\yy)}}
+\newcommand{\dhell}{d_\text{Hell}}
+\newcommand{\potp}{\Phi(\te;\yy')}
+\newcommand{\work}{\mathcal{W}}
+\newcommand{\QoI}{\text{QoI}}
+\newcommand{\HH}{\mathbf{H}}
+\newcommand{\sig}{\bm{\sigma}}
+\newcommand{\jp}[1]{\color{red}{(Written by Juan)  #1 }\color{black}}
+\newcommand{\nel}{N_\text{el}}
+\newcommand{\ff}{\mathbf{f}}
+\newtheorem{assumption}{Assumption}
+\newcommand{\del}{\nabla}
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{subfig}
+\usepackage{listings}
+\usepackage{subfig}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning}
+
+\newtheorem{definition}{\sc Definition}
+\newtheorem{proposition}{\sc Proposition}
+\newtheorem{theorem}{\sc Theorem}
+\newtheorem{proof}{Proof}
+\newtheorem{corollary}{\sc Corollary}
+\newtheorem{lemma}{\sc Lemma}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{\large DRAFT -- Infinite Swapping in Bayesian Inverse Problems. -- DRAFT}
+
+
+\author[1]{\small Jonas~Latz}
+\author[2]{\small Juan~Pablo~Madrigal~Cianci}
+\author[2]{\small Fabio~Nobile}
+\author[1]{\small Elisabeth~Ullam}
+\affil[1]{\tiny Chair of Numerical Analysis, TU M\"unchen, Boltzmannstr. 3, 85748 Garching b.M., Germany.}
+ \affil[2]{\tiny SB-MATHICSE-CSQI, \'{E}cole Polytechnique F\'{e}d\'{e}rale de Lausanne, Switzerland.}
+
+
+
+\renewcommand\Authands{ and }
+
+\begin{comment}
+  This format appears(?) to be adapted for Springer's {svjour3}
+  documentclass. Don't delete until known we will use another
+  format. For now, use package authblk above.
+  \author{Juan~Pablo~Madrigal~Cianci
+    \and Sebastian~Krumscheid
+    \and Panagiotis~Tsilifis
+    \and Fabio~Nobile
+    \and Anamika~Pandey
+    \and Ra\'{u}l~Tempone
+  }
+  
+  \institute{
+    J.~P.~M.~Cianci 
+    \and
+    S.~Krumscheid 
+    \and 
+    P.~Tsilifis
+    \and
+    F.~Nobile
+    \at
+    SB-MATHICSE-CSQI, \`{E}cole Polytechnique F\'{e}d\'{e}rale De Lausanne, Switzerland.
+    \and
+    A.~Pandey 
+    \and
+    R.~Tempone
+    \at
+    Computer, Electrical and  Mathematical Sciences and Engineering , KAUST, Thuwal, Saudi Arabia.}
+
+\end{comment}
+
+%\def\makeheadbox{{}}
+{\small{\date{\today}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+
+
+
+\end{abstract}
+\small{\textbf{Keywords:} Bayesian inversion; Parallel tempering; Measurement noise; Markov Chain Monte Carlo;  uncertainty quantification. \\ 
+
+\noindent \textbf{MSC:} 62F15, 62P30, 65M32, 60J22, 86A15, 35L53}
+\pagestyle{myheadings}
+\thispagestyle{plain}
+\markboth{\small  Latz, Madrigal Cianci, Nobile, Ullam.}{\small Infinite swapping in Bayesian inverse problems.}
+\section{Introduction}
+\section{Bayesian inverse problems }
+\section{Parallel Tempering and the infinite swapping limit}
+\section{Numerical experiments}
+\section*{Acknowledgments}
+This project is partly founded through the King Abdullah University of Science and Technology Grant OSR-2015- CRG4-2585-01: ``Advanced Multi-Level sampling techniques for Bayesian Inverse Problems with applications to subsurface''. J.P.M.C and F.N also acknowledge support from the Center for Advance Modeling Science (CADMOS). J.L and E.U acknowledge support by the Deutsche Forschungsgemeinschaft (DFG) through the TUM International
+Graduate School of Science and Engineering (IGSSE) within the project 10.02 BAYES. %The numerical experiments
+%were performed on the Linux clusters of the Leibniz Rechenzentrum at the Bayerische Akademie
+%der Wissenschaften.
+\newpage 
+\nocite{*}
+\bibliography{bib_IS}
+\bibliographystyle{plain}
+\newpage
+
+\end{document} 
+

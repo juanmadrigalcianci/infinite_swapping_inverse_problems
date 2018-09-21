@@ -1,0 +1,74 @@
+\begin{thebibliography}{10}
+
+\bibitem{andrieu2009pseudo}
+Christophe Andrieu and Gareth~O. Roberts.
+\newblock The pseudo-marginal approach for efficient {Monte Carlo}
+  computations.
+\newblock {\em The Annals of Statistics}, 37(2):697--725, 2009.
+
+\bibitem{appelo2006perfectly}
+Daniel Appel{\"o}, Thomas Hagstrom, and Gunilla Kreiss.
+\newblock Perfectly matched layers for hyperbolic systems: general formulation,
+  well-posedness, and stability.
+\newblock {\em SIAM Journal on Applied Mathematics}, 67(1):1--23, 2006.
+
+\bibitem{asmussen2007stochastic}
+S{\o}ren Asmussen and Peter~W Glynn.
+\newblock {\em Stochastic simulation: algorithms and analysis}, volume~57.
+\newblock Springer Science \& Business Media, 2007.
+
+\bibitem{earl2005parallel}
+David~J Earl and Michael~W Deem.
+\newblock Parallel tempering: Theory, applications, and new perspectives.
+\newblock {\em Physical Chemistry Chemical Physics}, 7(23):3910--3916, 2005.
+
+\bibitem{haario2006dram}
+Heikki Haario, Marko Laine, Antonietta Mira, and Eero Saksman.
+\newblock {DRAM: efficient adaptive MCMC}.
+\newblock {\em Statistics and computing}, 16(4):339--354, 2006.
+
+\bibitem{haario2001adaptive}
+Heikki Haario, Eero Saksman, and Johanna Tamminen.
+\newblock An adaptive {Metropolis} algorithm.
+\newblock {\em Bernoulli}, 7(2):223--242, 2001.
+
+\bibitem{hastings1970monte}
+W~Keith Hastings.
+\newblock {Monte Carlo} sampling methods using {Markov} chains and their
+  applications.
+\newblock {\em Oxford University Press}, 1970.
+
+\bibitem{kaipio2006statistical}
+Jari Kaipio and Erkki Somersalo.
+\newblock {\em Statistical and computational inverse problems}, volume 160.
+\newblock Springer Science \& Business Media, 2006.
+
+\bibitem{latz2017multilevel}
+Jonas Latz, Iason Papaioannou, and Elisabeth Ullmann.
+\newblock Multilevel sequential$^2$ {Monte Carlo} for {Bayesian} inverse
+  problems.
+\newblock {\em arXiv preprint arXiv:1709.09763}, 2017.
+
+\bibitem{metropolis1953equation}
+Nicholas Metropolis, Arianna~W Rosenbluth, Marshall~N Rosenbluth, Augusta~H
+  Teller, and Edward Teller.
+\newblock Equation of state calculations by fast computing machines.
+\newblock {\em The journal of chemical physics}, 21(6):1087--1092, 1953.
+
+\bibitem{meyn2012markov}
+Sean~P Meyn and Richard~L Tweedie.
+\newblock {\em Markov chains and stochastic stability}.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem{minson2013bayesian}
+S.E Minson, M.~Simons, and J.L Beck.
+\newblock {Bayesian} inversion for finite fault earthquake source models
+  i—theory and algorithm.
+\newblock {\em Geophysical Journal International}, 194(3):1701--1726, 2013.
+
+\bibitem{stuart2010inverse}
+Andrew~M Stuart.
+\newblock Inverse problems: a {Bayesian} perspective.
+\newblock {\em Acta Numerica}, 19:451--559, 2010.
+
+\end{thebibliography}
