@@ -74,11 +74,11 @@ Ns=1; %How often do we swap
 X=cell(N_temp,1);%prealloactes
 y=zeros(N_temp,p); %preallocates proposals
 %beta=20.^(0:N_temp); %vector of inverse temperatures\
-beta = [1 2000];
+beta = [1 5];
 acpt=zeros(N_temp,1); %acceptace rate
 %lower and upper limit for uniform prior
-a=[0,0];
-b=[1,1]; 
+a=-5;
+b=5; 
 %Defines likelihood, prior and posterior functions
 
 %time=linspace(0,3,length(d));
@@ -103,7 +103,7 @@ px(1,i)=L(X{i}(1,:));
 end
 weight{1}(1) = rho(X{1}(1,:),X{2}(1,:),1,5);
 weight{2}(1) = rho(X{2}(1,:),X{1}(1,:),1,5);
-sigma_rwm=[0.005,0.1];%*linspace(1,100,N_temp);
+sigma_rwm=[0.5,2];%*linspace(1,100,N_temp);
 disp('Entered MH loop')
 delta=zeros(N,2);
 delta(1,:) = [1,2];
@@ -114,10 +114,8 @@ for j=1:N-1
     
     for k=1:N_temp
         y(k,:)=X{i}(j,:)+sigma_rwm(k)*randn(1,p);
-        if k==N_temp
-           y(k,:)=a+(b-a).*randn(1,p);
-        end
-        py(j,k)=post(y(k,:));
+        %py(j,k)=post(y(k,:));
+        py(j,k)=L(y(k,:));
 
     end
 
@@ -138,24 +136,24 @@ end
 
 %disp([' ratio ',num2str(exp(ratio'))])
 
-%swaps
-if mod(j,Ns)==0
-   for k=1:N_temp
-       if k<N_temp
-       ak=px(j+1,k+1)/beta(k)+px(j+1,k)/beta(k+1)-px(j+1,k)/beta(k)-px(j+1,k+1)/beta(k+1);
-       if ak>log(rand)
-         %  disp(['swapped temps ' , num2str(k) ,' and ',num2str(k+1)])
-           %changes posteriors
-           p1=px(j+1,k);p2=px(j+1,k+1);
-           px(j+1,k)=p2; px(j+1,k+1)=p1;
-           %changes points
-           p1=X{k}(j+1,:);   p2=X{k+1}(j+1,:); 
-          X{k}(j+1,:)=p2;   X{k+1}(j+1,:)=p1; 
-       end
- 
-       end
-   end
-end
+% %swaps
+% if mod(j,Ns)==0
+%    for k=1:N_temp
+%        if k<N_temp
+%        ak=px(j+1,k+1)/beta(k)+px(j+1,k)/beta(k+1)-px(j+1,k)/beta(k)-px(j+1,k+1)/beta(k+1);
+%        if ak>log(rand)
+%          %  disp(['swapped temps ' , num2str(k) ,' and ',num2str(k+1)])
+%            %changes posteriors
+%            p1=px(j+1,k);p2=px(j+1,k+1);
+%            px(j+1,k)=p2; px(j+1,k+1)=p1;
+%            %changes points
+%            p1=X{k}(j+1,:);   p2=X{k+1}(j+1,:); 
+%           X{k}(j+1,:)=p2;   X{k+1}(j+1,:)=p1; 
+%        end
+%  
+%        end
+%    end
+% end
    
  
 
@@ -192,8 +190,8 @@ Wb = [weight{1}, weight{2}];
 
 for j = 1:10000
    i=randsample(2,1,true,[weight{1}(j),weight{2}(j)]);
-   Ya_res(j,:) = X{i}(j,:);
-   Yb_res(j,:) = X{3-i}(j,:);
+   Ya_res(j) = X{i}(j,:);
+   Yb_res(j) = X{3-i}(j,:);
 end
 
 

@@ -1,42 +1,79 @@
 %---------------------------------------------------------------------
 %
-% Toy Parallel Tempering. Juan and Jonas
+% Toy parallel tempering. multiple source inversion. 
+% 
+% Juan and Janos
 %
 %
-%   u_tt(t,x)-u_xx(t,x)=0,
-%   u(0,x)=h(x;te)
-%   t\in [0,T]
-%   u_t(0,x)=0;
+%   -Delta u(x)=f(x,y;theta) in D,
+%   u(x,y)=0                on dD 
+%   f(x,y;theta)=exp(-(x-x0)^2-(y-y0)^2) + exp(-(x-x1)^2-(y-y1)^2)
+%   where theta=(x0,y0), D=[0,1]^2
+%
 %
 %---------------------------------------------------------------------
-%clc;
-%clf;
+clc;
 clear variables; 
-%close all;
-
-
+close all;
+%---------------------------------------------------------------------
+%
+% Generates numerical pde related stuff
+%
+%---------------------------------------------------------------------
+n=64;       %number of grid points on each component     
+h=1/n;
+e = ones(n,1);
+k = spdiags([-e 2*e -e], -1:1, n, n);
+I=eye(n);
+A=(kron(k,I)+kron(I,k))/(h^2);
+x=linspace(0,1,n);
+y=linspace(0,1,n)';
+%defines function to call the right hand side
+F=@(X) 0.5*reshape(exp(-1000*(x-X(1)).^2-1000*(y-X(2)).^2) + exp(-1000*(x-X(3)).^2-1000*(y-X(4)).^2),n^2,1);
 %---------------------------------------------------------------------
 %
 % Generates Data
 %
 %---------------------------------------------------------------------
-%y_true=0;
-%d_pure=f(y_true);
-sigma=0.1;%*max(d_pure);
-%d=d_pure+sigma*randn(length(d_pure),1);
+%---------------------------------------------------------------------
+%
+% Generates Data
+%
+%---------------------------------------------------------------------
+th_true=[.7,.7,.3,.3];
+f=F(th_true);
+u_true=A\f;
+[xg,yg]=meshgrid(x,y);
+F=@(X) 0.5*reshape(exp(-1000*(x-X(1)).^2-1000*(y-X(2)).^2) + exp(-1000*(x-X(1)).^2-1000*(y-X(2)).^2),n^2,1);
+
+
+%for simplicity, let's use the whole solution as an observation operator
+sigma=0.01*max(u_true);
+d=u_true+sigma*randn(length(u_true),1); %adds noise to the solution
+
+%plots true data, just becuase
+figure(1)
+subplot(121)
+surf(xg,yg,reshape(u_true,n,n));
+title('u_t(x,\theta_t)')
+subplot(122)
+surf(xg,yg,reshape(d,n,n));
+title('d(x,\theta_t)')
+
+
 
 %---------------------------------------------------------------------
 %
 % Defines some hyper parameters, Number of temperatures, N samples, etc.  
 %
 %---------------------------------------------------------------------
-p=1;%number of parameters
+p=2;%number of parameters
 N=10^4; %number of samples
 N_temp=2;%number of temperatures
 Ns=1; %How often do we swap
 X=cell(N_temp,1);%prealloactes
 y=zeros(N_temp,p); %preallocates proposals
-beta=20.^(0:N_temp); %vector of inverse temperatures\
+%beta=20.^(0:N_temp); %vector of inverse temperatures\
 beta = [1 5];
 acpt=zeros(N_temp,1); %acceptace rate
 %lower and upper limit for uniform prior
